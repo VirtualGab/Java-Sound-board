@@ -8,8 +8,6 @@
 -----------------------------------------------------------------------------------------------
 */
 
-//TODO (GITHUB) UPDATE readme.md to include the new microphone features, and add new root for the microphone projectù
-//TODO why the goddamn array fucks everything and doesnt let me serialize???
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
