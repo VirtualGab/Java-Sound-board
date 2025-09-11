@@ -7,7 +7,6 @@
        \/       ||  |  \      ||      |_______|  //    \\   ||___  \\__|_| //    \\  |_____/
 -----------------------------------------------------------------------------------------------
 */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -69,6 +68,8 @@ public class App {
         loaded.recordvoice = micon;
         loaded.savedmixername = nameoftheMixer;
 
+        Compatible_Mixers();
+
         int option = 0;
             if(micon){  //selects default system microphone
                 System.out.println("building process");
@@ -93,8 +94,8 @@ public class App {
             switch(option){ 
                 case 1:System.out.println("soundboard mode"); soundboardmode(myscanner, homefolder, info, micon); break;
                 case 2: System.out.println("Playlist mode:\nDifferently from soundboard mode this mode will play all files in the directory you have provided");
-                SaveSettings(myscanner, loaded);
-                PlaylistMode(homefolder, info);
+                SaveSettings(loaded);
+                PlaylistMode(homefolder, info, myscanner);
                 break; 
                 case 3: homefolder = GetFileName(); break;
                 case 4: info = Selectmixerinfo(myscanner); break;
@@ -121,16 +122,20 @@ public class App {
         if(micon){
             process.destroy();
         }
-        SaveSettings(myscanner, loaded);  
+        SaveSettings(loaded); 
+        myscanner.close();  
         System.exit(0);
     }
-    static void PlaylistMode(String homefolder, int info){
-        Thread t1 = new Threaded(homefolder, info);
+    static void PlaylistMode(String homefolder, int info, Scanner myscanner) throws InterruptedException{
+        SharedResource sharedResource = new SharedResource();
+        Thread t1 = new Threaded(homefolder, info, sharedResource);
         t1.start();
-        System.out.println("Type \"return\" to return to main menu. (It will not stop the playlist from playing until you quit the application!)");
-        System.console().readLine();
+        System.out.println("Type \"return\" to return to main menu.");
+        myscanner.next();
+        myscanner.nextLine();
+        sharedResource.SetBoolTrue();
         try {
-            t1.interrupt();
+            t1.interrupt(); //useless
         } catch (Exception e) {
             System.err.println(e + " while trying to interrupt Thread");
         }
@@ -141,7 +146,7 @@ public class App {
         int answer = 0;
         do {
             String[] fileList = filesindirectory(homefolder); //elencare tutti i file per poi scegliere cosa riprodurre
-            System.out.println("Select audio track to play (only .wav files!!).\nInsert 0 to quit application");
+            System.out.println("Select audio track to play (only .wav files!!).\nInsert 0 to return to main menu");
             for(int i = 0; i<fileList.length;i++){
                 System.out.println(i+1 + " - " + fileList[i]);
             }
@@ -149,15 +154,20 @@ public class App {
             //myscanner.next();
             if(answer!=0){
                 try { //play sound
-                    File file = new File(homefolder+ "\\" + fileList[answer-1]); 
+                    File file = new File(homefolder+ "/" + fileList[answer-1]); 
                     AudioInputStream audiostream = AudioSystem.getAudioInputStream(file);
-                    
+                    AudioInputStream audiostream2 = AudioSystem.getAudioInputStream(file);
+                   
                     Clip clip = AudioSystem.getClip(AudioSystem.getMixerInfo()[info]);
+                    Clip clip2 = AudioSystem.getClip(); //CLIP2 is used to output the sounds played back to the user without setting the VAD as "listen" microphone
                     clip.open(audiostream);
+                    clip2.open(audiostream2);
                     clip.start();
+                    clip2.start();
                     System.out.println("type \"stop\" to stop the audio that is currently playing and play another");
                     myscanner.next();
                     clip.stop();
+                    clip2.stop();
 
                 } catch (Throwable t) {
                     System.out.println("error " + t);
@@ -168,8 +178,8 @@ public class App {
         
     }
 
-    static void SaveSettings(Scanner myscanner, Preferences loaded){
-        myscanner.close();   
+    static void SaveSettings(Preferences loaded){
+          
         try (FileOutputStream fos = new FileOutputStream("prefs.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(loaded);
@@ -198,7 +208,7 @@ public class App {
         return answer;
     }
     static void SetSoundspath(){
-        System.out.println("Select a folder from which to play its sounds. Click cancel or the X to quit the application.");
+        System.out.println("Select a folder from which to play its sound files. Click cancel or the X to quit the application.");
         soundspath = GetFileName();
         System.out.println(soundspath);
         if(soundspath.equals(null))
@@ -228,19 +238,19 @@ public class App {
     }
     public static String[] filesindirectory(String directoryPath) {
 
-    File dir = new File(directoryPath);
+        File dir = new File(directoryPath);
 
-    Collection<String> files  =new ArrayList<String>();
+        Collection<String> files  =new ArrayList<String>();
 
-    if(dir.isDirectory()){
-        File[] listFiles = dir.listFiles();
+        if(dir.isDirectory()){
+            File[] listFiles = dir.listFiles();
 
-        for(File file : listFiles){
-            if(file.isFile()) {
-                files.add(file.getName());
+            for(File file : listFiles){
+                if(file.isFile()) {
+                    files.add(file.getName());
+                }
             }
         }
-    }
 
         return files.toArray(new String[]{});
     }
@@ -264,7 +274,7 @@ public class App {
                 compatiblemixers[index] = i;
                 index++;
             } catch (Exception e) {
-                //Handle exception
+                //System.err.println("Error while verifying Mixers. Did you move the pan.wav file? Put it back!");
             }
         } 
     } 

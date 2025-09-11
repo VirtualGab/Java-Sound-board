@@ -1,6 +1,5 @@
 import java.io.Serializable;
 
-import javax.sound.sampled.Mixer;
 public class Preferences implements Serializable{
     public String thesoundspath;
     public int selectedmixer;
