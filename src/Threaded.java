@@ -39,7 +39,7 @@ public class Threaded extends Thread{ //used for playlist mode
                     //Thread.sleep(Double.valueOf(durationInSeconds*1000).longValue()); //old way of waiting
                     for(long y = 0; y<Double.valueOf(durationInSeconds*1000).longValue()&&sharedsource.getFlag() == false;y++){
                         Thread.sleep(1);
-                        System.out.println("y has reached value " + y + " out of " + Double.valueOf(durationInSeconds*1000).longValue());
+                        //System.out.println("y has reached value " + y + " out of " + Double.valueOf(durationInSeconds*1000).longValue());
                     }
                     clip.stop();
                     clip2.stop();
