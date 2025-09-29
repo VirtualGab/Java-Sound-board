@@ -112,7 +112,12 @@ public class App {
                     pb = new ProcessBuilder("java", "-jar", "MicrophoneMode.jar", serializedInfo); //will not launch if user hasn't configured java within its PATH
                     process = pb.start();
                 } else{
-                    process.destroy();
+                    try {
+                        process.destroy();
+                    } catch (Exception e) {
+                        System.out.println("mic was never on (process not created)");
+                    }
+                    
                 }
                 break;
                 case 6: System.out.println("This guide is sure to work on windows Idk for mac/linux. There are two ways to setup a VAD. Either:\n1. Download drivers from the internet; or\n2. Install from steam \"soundpad DEMO\" (and then uninstall it, if you want). That will create a new audio device, \"Steam Streaming Microphone\"\nThe VAD (or Steam Streaming Microphone) is a special Audio Device that lets you\n play audio through it and use it as a microphone.\nThen select the VAD as output device in this app once you restart it\n(if this explanation of VAD isn't accurate idc because my objective was to keep it simple)");myscanner.nextLine();myscanner.nextLine();break;
