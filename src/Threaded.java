@@ -35,11 +35,11 @@ public class Threaded extends Thread{ //used for playlist mode
                     clip2.start();
                     AudioFormat format = audiostream2.getFormat();
                     long frames = audiostream2.getFrameLength();
-                    double durationInSeconds = (frames+0.0) / format.getFrameRate();
-                    //Thread.sleep(Double.valueOf(durationInSeconds*1000).longValue()); //old way of waiting
-                    for(long y = 0; y<Double.valueOf(durationInSeconds*1000).longValue()&&sharedsource.getFlag() == false;y++){
-                        Thread.sleep(1);
-                        //System.out.println("y has reached value " + y + " out of " + Double.valueOf(durationInSeconds*1000).longValue());
+                    double durationInSeconds = (frames+0.0) / format.getFrameRate(); 
+                    try {
+                        Thread.sleep(Double.valueOf(durationInSeconds*1000).longValue());
+                    } catch (InterruptedException e) {
+                        
                     }
                     clip.stop();
                     clip2.stop();
