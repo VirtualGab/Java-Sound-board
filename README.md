@@ -14,7 +14,7 @@ Heads-up before installing:
 
 -   With the change I've commited on 9/9/25, you can speak with the same output as the VAD (so that you don't have to switch mics while playing the soundboard).
 
-
+- In Source Games such as CS:S or Team Fortress 2 the soundboard has to be the primary microphone or it won't work properly.
 
 Have fun with your soundboard!
 
