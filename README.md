@@ -15,7 +15,7 @@ Heads-up before installing:
 -   With the change I've commited on 9/9/25, you can speak with the same output as the VAD (so that you don't have to switch mics while playing the soundboard).
 
 
-
+To install the soundboard on your computer, you need just the files in the "JAR" folder in this repository.
 Have fun with your soundboard!
 
 
