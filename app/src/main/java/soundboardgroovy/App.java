@@ -1,3 +1,5 @@
+package soundboardgroovy;
+
 /*
 -----------------------------------------------------------------------------------------------
                     _____  ________   ___   ___                     ______            _____
@@ -120,7 +122,7 @@ public class App {
                     
                 }
                 break;
-                case 6: System.out.println("This guide is sure to work on windows Idk for mac/linux. There are two ways to setup a VAD. Either:\n1. Download drivers from the internet; or\n2. Install from steam \"soundpad DEMO\" (and then uninstall it, if you want). That will create a new audio device, \"Steam Streaming Microphone\"\nThe VAD (or Steam Streaming Microphone) is a special Audio Device that lets you\n play audio through it and use it as a microphone.\nThen select the VAD as output device in this app once you restart it\n(if this explanation of VAD isn't accurate idc because my objective was to keep it simple)");myscanner.nextLine();myscanner.nextLine();break;
+                case 6: System.out.println("There are two ways to setup a VAD. Either:\n1. Download drivers from the internet; or\n2. Install from steam \"soundpad DEMO\" (and then uninstall it, if you want). That will create a new audio device, \"Steam Streaming Microphone\"\nThe VAD (or Steam Streaming Microphone) is a special Audio Device that lets you\n play audio through it and use it as a microphone.\nThen select the VAD as output device in this app once you restart it\n(if this explanation of VAD isn't accurate idc because my objective was to keep it simple)");myscanner.nextLine();myscanner.nextLine();break;
                 default: System.out.println("Quit");
             }
         }
@@ -282,6 +284,6 @@ public class App {
                 //System.err.println("Error while verifying Mixers. Did you move the pan.wav file? Put it back!");
             }
         } 
-    } 
+    }
     
 }

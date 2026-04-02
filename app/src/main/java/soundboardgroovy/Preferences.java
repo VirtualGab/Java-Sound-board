@@ -1,3 +1,5 @@
+package soundboardgroovy;
+
 import java.io.Serializable;
 
 public class Preferences implements Serializable{

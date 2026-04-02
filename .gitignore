@@ -9,8 +9,6 @@
 #settings files
 *.bin
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 # *.jar
@@ -24,15 +22,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# Eclipse
-.settings/
-.project
-.classpath
-
-# IntelliJ IDEA
-*.iml
-.idea/
-out/
 
 # NetBeans
 nbproject/private/
@@ -45,9 +34,14 @@ nbdist/
 # VS Code
 .vscode/
 
-# Maven
-target/
+
 
 # Gradle
 .gradle/
 build/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

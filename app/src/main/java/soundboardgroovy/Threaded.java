@@ -1,3 +1,5 @@
+package soundboardgroovy;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +22,7 @@ public class Threaded extends Thread{ //used for playlist mode
     public void run(){
         Clip clip = null;
         Clip clip2 = null;
-        while(1==1){
+        while(true){
             String[] fileList = filesindirectory(homefolder); 
             for(int i = 0; i<fileList.length&&sharedsource.getFlag() == false; i++){
                 try {
